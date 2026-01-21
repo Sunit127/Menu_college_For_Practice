@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Riding Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bike-icon {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+            animation: float 20s infinite;
+        }
+
+        .bike-icon:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bike-icon:nth-child(2) {
+            top: 70%;
+            left: 80%;
+            animation-delay: 5s;
+        }
+
+        .bike-icon:nth-child(3) {
+            top: 40%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        .bike-icon:nth-child(4) {
+            top: 80%;
+            left: 60%;
+            animation-delay: 15s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .bike-logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: spin 3s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+        .form-group:nth-child(9) { animation-delay: 0.9s; }
+        .form-group:nth-child(10) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input:focus + label,
+        select:focus + label,
+        textarea:focus + label {
+            color: #667eea;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            margin-top: 10px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover,
+        .radio-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateX(5px);
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        button {
+            flex: 1;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-reset:hover {
+            background: #e0e0e0;
+            transform: translateY(-3px);
+        }
+
+        .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-message h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: rotate 1s ease-in-out;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg) scale(0); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon input {
+            padding-left: 50px;
+        }
+
+        .icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: help;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+            width: 200px;
+            font-weight: 400;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        select option:disabled {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="bike-icon">🚴</div>
+        <div class="bike-icon">🚴‍♀️</div>
+        <div class="bike-icon">🚴‍♂️</div>
+        <div class="bike-icon">🚴</div>
+    </div>
+
+    <div class="container">
+        <div class="form-header">
+            <div class="bike-logo">🚴‍♂️</div>
+            <h1>Bike Riding Registration</h1>
+            <p class="subtitle">Join us for an amazing cycling adventure!</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <form id="bikeForm">
+            <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <div class="input-icon">
+                    <span class="icon">👤</span>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <div class="input-icon">
+                        <span class="icon">📧</span>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <div class="input-icon">
+                        <span class="icon">📱</span>
+                        <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="age">Age <span class="required">*</span></label>
+                    <input type="number" id="age" name="age" required min="5" max="99" placeholder="Enter your age">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDate">Event Date <span class="required">*</span></label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Riding Experience Level <span class="required">*</span>
+                    <span class="tooltip">ℹ️
+                        <span class="tooltip-text">Select your comfort level with bike riding</span>
+                    </span>
+                </label>
+                <select id="experience" name="experience" required>
+                    <option value="" disabled selected>Select your experience level</option>
+                    <option value="beginner">Beginner - Just starting out</option>
+                    <option value="intermediate">Intermediate - Comfortable with basic riding</option>
+                    <option value="advanced">Advanced - Experienced cyclist</option>
+                    <option value="expert">Expert - Professional level</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bikeType">Bike Type <span class="required">*</span></label>
+                <select id="bikeType" name="bikeType" required>
+                    <option value="" disabled selected>Select your bike type</option>
+                    <option value="road">Road Bike</option>
+                    <option value="mountain">Mountain Bike</option>
+                    <option value="hybrid">Hybrid Bike</option>
+                    <option value="electric">Electric Bike</option>
+                    <option value="rental">Need to Rent</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Route Distance Preference <span class="required">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="short" name="distance" value="short" required>
+                        <label for="short">Short Route (5-10 km) - Leisure pace</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="medium" name="distance" value="medium">
+                        <label for="medium">Medium Route (15-25 km) - Moderate pace</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="long" name="distance" value="long">
+                        <label for="long">Long Route (30-50 km) - Challenging</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="extreme" name="distance" value="extreme">
+                        <label for="extreme">Extreme Route (50+ km) - For experts</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Safety Equipment You'll Bring</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="helmet" name="equipment" value="helmet">
+                        <label for="helmet">Helmet 🪖</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="gloves" name="equipment" value="gloves">
+                        <label for="gloves">Gloves 🧤</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="kneepads" name="equipment" value="kneepads">
+                        <label for="kneepads">Knee Pads</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lights" name="equipment" value="lights">
+                        <label for="lights">Bike Lights 💡</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="reflective" name="equipment" value="reflective">
+                        <label for="reflective">Reflective Vest 🦺</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="emergency">Emergency Contact Name <span class="required">*</span></label>
+                <input type="text" id="emergency" name="emergency" required placeholder="Name of emergency contact">
+            </div>
+
+            <div class="form-group">
+                <label for="emergencyPhone">Emergency Contact Phone <span class="required">*</span></label>
+                <input type="tel" id="emergencyPhone" name="emergencyPhone" required placeholder="+1 (555) 000-0000">
+            </div>
+
+            <div class="form-group">
+                <label for="medical">Medical Conditions or Allergies
+                    <span class="tooltip">ℹ️
+                        <span class="tooltip-text">Please inform us of any conditions we should be aware of</span>
+                    </span>
+                </label>
+                <textarea id="medical" name="medical" placeholder="List any medical conditions, allergies, or special requirements (optional)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Additional Comments or Special Requests</label>
+                <textarea id="comments" name="comments" placeholder="Any other information you'd like to share (optional)"></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    <span style="position: relative; z-index: 1;">Reset Form</span>
+                </button>
+                <button type="submit" class="btn-submit">
+                    <span style="position: relative; z-index: 1;">Register Now 🚴‍♂️</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✅</div>
+            <h2>Registration Successful!</h2>
+            <p>Thank you for registering! We've sent a confirmation email with all the details.</p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">See you on the ride! 🚴‍♂️</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('bikeForm');
+        const progressBar = document.getElementById('progressBar');
+        const successMessage = document.getElementById('successMessage');
+
+        // Update progress bar based on filled inputs
+        function updateProgress() {
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            let filled = 0;
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const radioGroup = form.querySelectorAll(`input[name="${input.name}"]`);
+                    const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                    if (isChecked && !input.dataset.counted) {
+                        radioGroup.forEach(r => r.dataset.counted = 'true');
+                        filled++;
+                    }
+                } else if (input.value.trim() !== '') {
+                    filled++;
+                }
+            });
+            
+            const percentage = (filled / inputs.length) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        // Add event listeners to all inputs
+        const allInputs = form.querySelectorAll('input, select, textarea');
+        allInputs.forEach(input => {
+            input.addEventListener('input', updateProgress);
+            input.addEventListener('change', updateProgress);
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (form.checkValidity()) {
+                // Get form data
+                const formData = new FormData(form);
+                const data = {};
+                
+                formData.forEach((value, key) => {
+                    if (data[key]) {
+                        if (Array.isArray(data[key])) {
+                            data[key].push(value);
+                        } else {
+                            data[key] = [data[key], value];
+                        }
+                    } else {
+                        data[key] = value;
+                    }
+                });
+                
+                // Log the data (in real application, send to server)
+                console.log('Form submitted with data:', data);
+                
+                // Hide form and show success message
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Optional: Reset after showing success
+                setTimeout(() => {
+                    location.reload();
+                }, 5000);
+            } else {
+                // Show validation errors
+                form.reportValidity();
+            }
+        });
+
+        // Reset form function
+        function resetForm() {
+            form.reset();
+            progressBar.style.width = '0%';
+            
+            // Clear radio counted flags
+            const radios = form.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                delete radio.dataset.counted;
+            });
+        }
+
+        // Set minimum date to today
+        const eventDateInput = document.getElementById('eventDate');
+        const today = new Date().toISOString().split('T')[0];
+        eventDateInput.setAttribute('min', today);
+
+        // Add floating animation to form on scroll
+        window.addEventListener('scroll', () => {
+            const container = document.querySelector('.container');
+            const scrolled = window.pageYOffset;
+            container.style.transform = `translateY(${scrolled * 0.1}px)`;
+        });
+
+        // Phone number formatting
+        const phoneInputs = document.querySelectorAll('input[type="tel"]');
+        phoneInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    if (value.length <= 3) {
+                        e.target.value = value;
+                    } else if (value.length <= 6) {
+                        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                    } else {
+                        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                    }
+                }
+            });
+        });
+
+        // Initial progress update
+        updateProgress();
+    </script>
+</body>
+</html>
